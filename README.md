@@ -7,6 +7,9 @@
 
 本文件中的命令都在仓库根目录执行。
 
+- 仓库：https://github.com/wuhulamb/t
+- 网站：https://wuhulamb.github.io/t/
+
 ## 1. 第一阶段包含什么
 
 - Astro 7 静态网站，Markdown 内容集合。
@@ -265,6 +268,23 @@ BASE_PATH=/personal-photo-journal npm run test:site
 
 工作流文件通过 `actionlint 1.7.12` 检查。`package-lock.json` 已生成，依赖审计结果为 0 个已知漏洞。
 
+GitHub Actions 已实际运行成功：
+
+```text
+https://github.com/wuhulamb/t/actions/runs/39438201961
+```
+
+公网部署也已验证：
+
+```text
+https://wuhulamb.github.io/t/                    → 200，标题“拾光集”
+/posts/2026-10-15-city-walk/                    → 200
+/uploads/2026/10/city-walk.svg                  → 200 image/svg+xml
+/t/_astro/BaseLayout.CoXZlaOc.css               → 200 text/css
+```
+
+Pages 当前构建方式为 GitHub Actions，状态为 `built`。
+
 测试覆盖：
 
 - frontmatter：UUID、日期、标题长度、图片路径安全、图片数量、草稿默认值。
@@ -277,8 +297,7 @@ BASE_PATH=/personal-photo-journal npm run test:site
 
 未执行/无法在当前环境验证：
 
-- 真实 GitHub Actions 运行和 GitHub Pages 公网部署（本地验证不代替 GitHub 端执行）。
-- 真实浏览器截图/视觉回归测试（当前环境只做文本与构建产物检查）。
+- 真实浏览器视觉回归测试（当前环境只做文本、HTML、构建产物和 HTTP 检查）。
 - 自定义域名的实际 DNS 与证书。
 
 ## 9. 第一阶段验收对照
@@ -287,20 +306,19 @@ BASE_PATH=/personal-photo-journal npm run test:site
 | --- | --- |
 | 能手动向仓库添加 Markdown 和图片 | 已完成，示例内容可直接参考 |
 | 本地构建成功 | 已完成（7 个页面） |
-| GitHub Actions 自动构建 | 工作流已配置并通过本地语法检查；待首次推送后确认 |
-| GitHub Pages 部署 | 工作流已配置；待仓库端手动开启 Pages |
-| 公开网站正确展示文字和图片 | 构建产物与模拟 `/repo/` 路径已检查；待公网确认 |
+| GitHub Actions 自动构建 | 已成功运行 |
+| GitHub Pages 部署 | 已部署，Pages 状态 `built` |
+| 公开网站正确展示文字和图片 | 已通过公网 HTTP 检查 |
 
 ## 10. 需要你手动完成的操作
 
-- [ ] 创建 GitHub 仓库（公开或符合 Pages 条件的私有仓库），把仓库根目录推送上去。
-- [ ] 在仓库 **Settings → Pages** 把 Source 设置为 **GitHub Actions**。
-- [ ] 在 **Settings → Actions → General → Workflow permissions** 允许读写。
-- [ ] 推送后打开 **Actions**，确认 **Build and deploy to GitHub Pages** 成功。
-- [ ] 打开部署地址，检查首页、帖子详情、图片是否正常。
-- [ ] 如需自定义域名：配置仓库变量 `SITE_URL`、`public/CNAME` 和 DNS。
-- [ ] 把实际仓库地址、部署地址、默认分支、是否使用自定义域名告诉我，方便确认第一阶段验收并进入第二阶段。
-- [ ] 可选：把示例帖子/图片替换成你的真实内容。
+- [x] 创建 GitHub 仓库并推送
+- [x] 在仓库 **Settings → Pages** 把 Source 设置为 **GitHub Actions**
+- [x] 在 **Settings → Actions → General → Workflow permissions** 允许读写
+- [x] 确认 **Build and deploy to GitHub Pages** 成功
+- [x] 打开部署地址，检查首页、帖子详情、图片
+- [ ] 可选：配置自定义域名（`SITE_URL`、`public/CNAME` 和 DNS）
+- [ ] 可选：把示例帖子/图片替换成你的真实内容
 
 ## 11. 关于 Secret
 
