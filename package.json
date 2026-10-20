@@ -1,0 +1,32 @@
+{
+  "name": "personal-photo-journal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "基于 Astro 的个人图文存档网站，内容保存在 Git 仓库并自动部署到 GitHub Pages。",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:site": "node scripts/check-built-site.mjs",
+    "verify": "npm run check && npm run test && npm run build && npm run test:site"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "7.3.3",
+    "astro": "7.4.1",
+    "unist-util-visit": "5.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.11",
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5",
+    "yaml": "2.9.1"
+  }
+}

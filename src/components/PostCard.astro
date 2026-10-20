@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import {
+  formatDate,
+  getPostExcerpt,
+  getPostTitle,
+  postPath,
+  toDateISO,
+  withBase,
+} from '../lib/posts';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const href = withBase(postPath(post.id));
+const title = getPostTitle(post);
+const cover = post.data.images[0];
+const excerpt = getPostExcerpt(post.body ?? '', 120);
+const imageCount = post.data.images.length;
+---
+
+<article class:list={['post-card', !cover && 'post-card--text']}>
+  <a class="post-card__link" href={href}>
+    {
+      cover && (
+        <div class="post-card__media">
+          <img src={withBase(cover)} alt="" loading="lazy" decoding="async" />
+        </div>
+      )
+    }
+    <div class="post-card__body">
+      <div class="post-card__meta">
+        <time datetime={toDateISO(post.data.createdAt)}>{formatDate(post.data.createdAt)}</time>
+        {imageCount > 0 && <span>{imageCount} 张图片</span>}
+      </div>
+      <h2>{title}</h2>
+      {excerpt && <p class="post-card__excerpt">{excerpt}</p>}
+      <span class="post-card__more">阅读全文 <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>

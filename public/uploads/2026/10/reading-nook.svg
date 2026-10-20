@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-labelledby="title desc">
+  <title id="title">安静的阅读角落</title>
+  <desc id="desc">深绿色墙面、扶手椅、落地灯和摊开的书。</desc>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#466257"/>
+      <stop offset="100%" stop-color="#2d443d"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9a7653"/>
+      <stop offset="100%" stop-color="#6a4d37"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx=".5" cy=".2" r=".8">
+      <stop offset="0%" stop-color="#ffe0a6" stop-opacity=".9"/>
+      <stop offset="100%" stop-color="#d4a15f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="chair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c97f55"/>
+      <stop offset="100%" stop-color="#8f4d33"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 .055"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1067" fill="url(#wall)"/>
+  <rect y="806" width="1600" height="261" fill="url(#floor)"/>
+  <path d="M0 806h1600" stroke="#d5b48d" stroke-width="4" opacity=".34"/>
+
+  <g opacity=".22" stroke="#cfe0d3" stroke-width="3">
+    <path d="M-40 180h1680M-40 300h1680M-40 420h1680M-40 540h1680M-40 660h1680"/>
+  </g>
+
+  <rect x="1090" y="98" width="368" height="494" rx="8" fill="#20352f" opacity=".7"/>
+  <rect x="1114" y="122" width="320" height="446" rx="4" fill="#7fa39a" opacity=".28"/>
+  <path d="M1274 122v446M1114 344h320" stroke="#243c35" stroke-width="12" opacity=".6"/>
+  <path d="M1130 470c52-82 110-113 174-94 47 14 77 49 90 105-89 9-177 5-264-11Z" fill="#f1d4a4" opacity=".23"/>
+
+  <ellipse cx="542" cy="855" rx="320" ry="86" fill="#1d2b26" opacity=".28" filter="url(#soft)"/>
+
+  <g>
+    <ellipse cx="470" cy="378" rx="240" ry="270" fill="url(#lamp)" filter="url(#glow)"/>
+    <rect x="696" y="270" width="12" height="467" rx="6" fill="#3a3a35"/>
+    <path d="M648 286h108l48 104H600Z" fill="#d7b57b"/>
+    <path d="M620 390h164l-22 42H642Z" fill="#b98d55" opacity=".8"/>
+    <ellipse cx="702" cy="743" rx="116" ry="25" fill="#3a3a35"/>
+    <ellipse cx="702" cy="735" rx="76" ry="16" fill="#4b4a42"/>
+  </g>
+
+  <g>
+    <path d="M296 806V625c0-76 48-128 119-128h94v309Z" fill="url(#chair)"/>
+    <path d="M306 636c17-59 57-91 120-91h73v67H370c-27 0-45 17-47 48Z" fill="#df9a70" opacity=".44"/>
+    <path d="M790 806V625c0-76-48-128-119-128h-94v309Z" fill="url(#chair)"/>
+    <path d="M780 636c-17-59-57-91-120-91h-73v67h129c27 0 45 17 47 48Z" fill="#e5a077" opacity=".38"/>
+    <rect x="356" y="614" width="404" height="102" rx="48" fill="#a95f3f"/>
+    <rect x="356" y="614" width="404" height="34" rx="17" fill="#d58a60" opacity=".55"/>
+    <rect x="390" y="780" width="336" height="58" rx="22" fill="#7e452f"/>
+    <path d="M318 806h60l-14 112h-52ZM738 806h60l14 112h-52Z" fill="#503426"/>
+  </g>
+
+  <g transform="translate(480 590)">
+    <ellipse cx="256" cy="214" rx="190" ry="26" fill="#4a2c1d" opacity=".3" filter="url(#soft)"/>
+    <path d="M18 76c80-30 146-27 224 7l-14 139c-80-28-148-30-228-2Z" fill="#f0dfbf"/>
+    <path d="M494 76c-80-30-146-27-224 7l14 139c80-28 148-30 228-2Z" fill="#f7e9d2"/>
+    <path d="M256 86v133" stroke="#b89a72" stroke-width="4" opacity=".6"/>
+    <path d="M62 106c62-15 112-11 172 9M72 145c56-12 104-8 155 10M82 184c53-11 97-7 144 9" stroke="#b7a082" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+    <path d="M421 110c-48-9-91-4-137 13M420 151c-49-9-94-4-141 14M415 190c-47-8-90-4-136 12" stroke="#c6b294" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+  </g>
+
+  <g>
+    <ellipse cx="1068" cy="806" rx="82" ry="18" fill="#2a211b" opacity=".28"/>
+    <path d="M1036 806h65l-9 112h-47Z" fill="#b56c4b"/>
+    <path d="M1018 680c0-32 19-54 50-54s50 22 50 54v85h-100Z" fill="#cf8b63"/>
+    <path d="M1046 628c-35-34-41-72-17-115 37 25 49 60 34 106Z" fill="#6e8f72"/>
+    <path d="M1060 626c31-39 70-52 117-39-15 45-50 68-104 70Z" fill="#7d9f80"/>
+    <path d="M1030 630c-28-32-34-66-17-102 34 22 46 53 36 94Z" fill="#5e8066"/>
+  </g>
+
+  <path d="M0 0h1600v1067H0Z" fill="#f2c47c" opacity=".05"/>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity=".8"/>
+</svg>

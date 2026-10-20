@@ -1,0 +1,28 @@
+# Node / Astro
+node_modules/
+dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local credentials — never commit
+*.token
+github.token
+cloudflare.token
+id_ed25519
+id_rsa
+*.pem
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.vscode/
+.idea/

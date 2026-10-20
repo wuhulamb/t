@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../lib/content';
+import type { Post } from '../../lib/content';
+import {
+  formatMonthDay,
+  getPostTitle,
+  getYear,
+  postPath,
+  toDateISO,
+  withBase,
+} from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+const groups: { year: string; posts: Post[] }[] = [];
+
+for (const post of posts) {
+  const year = getYear(post.data.createdAt);
+  const current = groups.at(-1);
+  if (current?.year === year) {
+    current.posts.push(post);
+  } else {
+    groups.push({ year, posts: [post] });
+  }
+}
+---
+
+<BaseLayout title="归档" description="按时间浏览全部帖子。">
+  <header class="page-header">
+    <p class="eyebrow">ARCHIVE</p>
+    <h1>全部归档</h1>
+    <p class="page-header__lede">
+      共 {posts.length} 篇记录。时间从新到旧排列。
+    </p>
+  </header>
+
+  {
+    groups.length === 0 ? (
+      <div class="empty-state">
+        <p class="empty-state__title">归档还是空的。</p>
+        <p>添加第一篇帖子后，这里会自动出现记录。</p>
+      </div>
+    ) : (
+      <div class="archive">
+        {groups.map((group) => (
+          <section class="archive-year" aria-labelledby={`year-${group.year}`}>
+            <h2 id={`year-${group.year}`}>{group.year}</h2>
+            <ul class="archive-list">
+              {group.posts.map((post) => (
+                <li>
+                  <a class="archive-item" href={withBase(postPath(post.id))}>
+                    <time datetime={toDateISO(post.data.createdAt)}>
+                      {formatMonthDay(post.data.createdAt)}
+                    </time>
+                    <span class="archive-item__title">{getPostTitle(post)}</span>
+                    <span class="archive-item__meta">
+                      {post.data.images.length > 0
+                        ? `${post.data.images.length} 图`
+                        : '文字'}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,115 @@
+---
+import { siteConfig } from '../config';
+import { withBase } from '../lib/posts';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  image,
+  type = 'website',
+  publishedTime,
+  noIndex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${siteConfig.title}` : siteConfig.title;
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const imageUrl = image ? new URL(withBase(image), siteUrl) : undefined;
+const currentPath = Astro.url.pathname;
+const navItems = [
+  { href: withBase('/'), label: '首页', active: currentPath === withBase('/') },
+  {
+    href: withBase('/posts/'),
+    label: '归档',
+    active: currentPath.startsWith(withBase('/posts/')),
+  },
+];
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f3ec" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171614" />
+    {noIndex && <meta name="robots" content="noindex" />}
+
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content={siteConfig.title} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    {publishedTime && (
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+    )}
+    <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="brand" href={withBase('/')} aria-label={`${siteConfig.title} 首页`}>
+          <span class="brand__mark" aria-hidden="true">拾</span>
+          <span class="brand__text">
+            <strong>{siteConfig.title}</strong>
+            <small>{siteConfig.tagline}</small>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          {
+            navItems.map((item) => (
+              <a href={item.href} aria-current={item.active ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="site-main">
+      <div class="shell">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell site-footer__inner">
+        <p>© {year} {siteConfig.author || siteConfig.title}</p>
+        <p class="site-footer__note">
+          文字与图片长期保存在 Git 仓库中
+          {siteConfig.repoUrl && (
+            <>
+              {' · '}
+              <a href={siteConfig.repoUrl} rel="noreferrer">查看仓库</a>
+            </>
+          )}
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

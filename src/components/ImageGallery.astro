@@ -1,0 +1,35 @@
+---
+import { withBase } from '../lib/posts';
+
+interface GalleryImage {
+  src: string;
+  index: number;
+}
+
+interface Props {
+  images: GalleryImage[];
+  total: number;
+  title: string;
+}
+
+const { images, total, title } = Astro.props;
+const pad = (value: number) => String(value).padStart(2, '0');
+---
+
+<section class="gallery" aria-label="帖子图片">
+  {
+    images.map(({ src, index }) => (
+      <figure class="gallery__item">
+        <img
+          src={withBase(src)}
+          alt={`${title} · 图片 ${index + 1}`}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>
+          {pad(index + 1)} / {pad(total)}
+        </figcaption>
+      </figure>
+    ))
+  }
+</section>

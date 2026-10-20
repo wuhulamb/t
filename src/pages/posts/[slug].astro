@@ -1,0 +1,114 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ImageGallery from '../../components/ImageGallery.astro';
+import type { Post } from '../../lib/content';
+import { getPublishedPosts } from '../../lib/content';
+import {
+  extractImagePaths,
+  formatDate,
+  getPostExcerpt,
+  getPostTitle,
+  postPath,
+  toDateISO,
+  withBase,
+} from '../../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const posts = await getPublishedPosts();
+const { Content } = await render(post);
+
+const title = getPostTitle(post);
+const cover = post.data.images[0];
+const body = post.body ?? '';
+const description = getPostExcerpt(body, 150) || undefined;
+const imageCount = post.data.images.length;
+
+const bodyImages = new Set(extractImagePaths(body));
+const galleryImages = post.data.images
+  .map((src, index) => ({ src, index }))
+  .filter(({ src }) => !bodyImages.has(src));
+
+const currentIndex = posts.findIndex((item) => item.id === post.id);
+const newerPost = currentIndex > 0 ? posts[currentIndex - 1] : undefined;
+const olderPost =
+  currentIndex >= 0 && currentIndex < posts.length - 1
+    ? posts[currentIndex + 1]
+    : undefined;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={cover}
+  type="article"
+  publishedTime={post.data.createdAt}
+>
+  <article class="post">
+    <header class="post__header">
+      <a class="back-link" href={withBase('/')}>← 返回首页</a>
+      <h1>{title}</h1>
+      <div class="post__meta">
+        <time datetime={toDateISO(post.data.createdAt)}>
+          {formatDate(post.data.createdAt)}
+        </time>
+        {
+          post.data.updatedAt && (
+            <span>
+              更新于
+              <time datetime={toDateISO(post.data.updatedAt)}>
+                {formatDate(post.data.updatedAt)}
+              </time>
+            </span>
+          )
+        }
+        {imageCount > 0 && <span>{imageCount} 张图片</span>}
+      </div>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {
+      galleryImages.length > 0 && (
+        <ImageGallery images={galleryImages} total={imageCount} title={title} />
+      )
+    }
+
+    {
+      (newerPost || olderPost) && (
+        <nav class="post-nav" aria-label="相邻帖子">
+          {newerPost ? (
+            <a class="post-nav__item" href={withBase(postPath(newerPost.id))}>
+              <span class="post-nav__label">更新的一篇</span>
+              <span class="post-nav__title">{getPostTitle(newerPost)}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {olderPost ? (
+            <a class="post-nav__item post-nav__item--next" href={withBase(postPath(olderPost.id))}>
+              <span class="post-nav__label">更早的一篇</span>
+              <span class="post-nav__title">{getPostTitle(olderPost)}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )
+    }
+  </article>
+</BaseLayout>
