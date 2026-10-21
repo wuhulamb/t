@@ -243,10 +243,10 @@ npm run check
 
 npm test
   Test Files  4 passed (4)
-  Tests       29 passed (29)
+  Tests       30 passed (30)
 
 npm run build
-  8 page(s) built
+  9 page(s) built
 
 npm run test:site
   base: /
@@ -308,7 +308,7 @@ Pages 当前构建方式为 GitHub Actions，状态为 `built`。
 | 验收项 | 状态 |
 | --- | --- |
 | 能手动向仓库添加 Markdown 和图片 | 已完成，示例内容可直接参考 |
-| 本地构建成功 | 已完成（8 个页面） |
+| 本地构建成功 | 已完成（9 个页面） |
 | GitHub Actions 自动构建 | 已成功运行 |
 | GitHub Pages 部署 | 已部署，Pages 状态 `built` |
 | 公开网站正确展示文字和图片 | 已通过公网 HTTP 检查 |
