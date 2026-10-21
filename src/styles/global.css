@@ -153,6 +153,9 @@
     z-index: 40;
     border-bottom: 1px solid var(--line);
     background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 76%, transparent);
+    -webkit-backdrop-filter: saturate(140%) blur(16px);
+    backdrop-filter: saturate(140%) blur(16px);
   }
 
   .site-header__inner {
