@@ -117,7 +117,7 @@ npm run dev
 
 ## 5. 添加一篇帖子
 
-在 `content/posts/` 新建 Markdown 文件，例如 `2026-10-20-example.md`：
+在 `content/posts/` 新建 Markdown 文件，文件名统一为 `<uuid>.md`，并与 frontmatter 的 `id` 一致。例如 `41ffec43-0218-4777-9d9b-d610667a95c6.md`：
 
 ```markdown
 ---
@@ -154,13 +154,13 @@ draft: false
 图片规则：
 
 1. 放到 `public/uploads/YYYY/MM/`。
-2. 文件名只使用字母、数字、点、下划线、连字符，例如 `2026-10-20-01.webp`，避免空格和中文。
+2. Worker 生成的图片统一命名为 `<uuid>-<hash12>.<ext>`，例如 `41ffec43-0218-4777-9d9b-d610667a95c6-76c5da9107c4.svg`。手工添加时也建议沿用这个格式；文件名不能包含空格或中文。
 3. frontmatter 和正文中的路径写成根路径：`/uploads/2026/10/example.webp`。
 4. 正文内嵌图片会自动加上 GitHub Pages 的 base；已经出现在正文中的图片不会在底部画廊重复展示。
 5. 图片原样发布，不做压缩/转码。建议上传前压缩到合理尺寸（例如长边 2000px 内、单张小于 500KB）。
 6. 正文字符数不设上限；网站按 Unicode code point 统计并在卡片、详情和归档中显示。
 
-URL 由文件名决定：`content/posts/2026-10-20-example.md` → `/posts/2026-10-20-example/`。发布后如需保持链接稳定，不要重命名文件。
+URL 由文件名决定：`content/posts/<uuid>.md` → `/posts/<uuid>/`。文件名与 frontmatter 的 `id` 保持一致，发布后不要重命名。
 
 添加后提交并推送：
 
@@ -346,7 +346,7 @@ GitHub PAT 建议只授权目标仓库，权限只需要 **Contents: Read and wr
 - 没有分页、搜索、标签、RSS、评论。
 - 图片不做优化，构建时原样复制；大图会影响加载速度。
 - 示例图片是 SVG 占位图，正式使用时请替换。
-- 帖子 URL 由文件名决定；稳定 UUID 已保存在 frontmatter 中，供后续发布流程使用。
+- 帖子 URL 由文件名决定；文件名统一为 `<uuid>.md`，与 frontmatter 的 `id` 一致，供 Worker 编辑接口直接定位。
 - 已测试根路径和项目页路径；自定义域名只完成配置支持，尚未实际部署验证。
 - GitHub Actions 使用主要版本标签（如 `actions/checkout@v7`），未固定到 commit SHA；如果未来需要更严格的供应链安全，可以再固定 SHA。
 
