@@ -27,10 +27,9 @@ for (const post of posts) {
 
 <BaseLayout title="归档" description="按时间浏览全部帖子。">
   <header class="page-header">
-    <p class="eyebrow">ARCHIVE</p>
     <h1>全部归档</h1>
     <p class="page-header__lede">
-      共 {posts.length} 篇记录。时间从新到旧排列。
+      共 {posts.length} 篇记录。
     </p>
   </header>
 
@@ -54,9 +53,7 @@ for (const post of posts) {
                     </time>
                     <span class="archive-item__title">{getPostTitle(post)}</span>
                     <span class="archive-item__meta">
-                      {post.data.images.length > 0
-                        ? `${post.data.images.length} 图 · ${countCharacters(post.body ?? '')} 字`
-                        : `${countCharacters(post.body ?? '')} 字`}
+                      {countCharacters(post.body ?? '')} 字
                     </span>
                   </a>
                 </li>

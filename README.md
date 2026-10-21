@@ -1,4 +1,4 @@
-# 拾光集 · 个人图文存档网站
+# 三一 · 个人图文存档网站
 
 > 当前进度：**第一阶段已完成**（Astro 静态网站 + GitHub Actions + GitHub Pages）。
 > 本仓库只包含 Astro 网站。Cloudflare Worker 和 Android App 会作为独立项目开发，目前尚未开始。
@@ -172,26 +172,22 @@ git push
 
 GitHub Actions 会自动构建和部署，不需要手动修改首页或归档页。
 
-## 6. 站点信息与可选环境变量
+## 6. 站点信息
 
-默认站点信息在 `src/config.ts`。也可以在本地 `.env` 或 GitHub 仓库的 **Settings → Secrets and variables → Actions → Variables** 中配置：
+站点标题、副标题和简介固定在 `src/config.ts`：
 
-| 变量 | 默认值 | 说明 |
-| --- | --- | --- |
-| `PUBLIC_SITE_TITLE` | `拾光集` | 站点标题 |
-| `PUBLIC_SITE_TAGLINE` | `把日常收进 Git` | 标题下的小字 |
-| `PUBLIC_SITE_DESCRIPTION` | 内置描述 | 首页介绍和 meta description |
-| `PUBLIC_SITE_AUTHOR` | 空 | 页脚署名，空时使用站点标题 |
-| `PUBLIC_REPO_URL` | 空 | 页脚“查看仓库”链接；公开仓库才建议填写 |
+```text
+标题：三一
+副标题：文字与照片
+简介：一个只记录文字与照片的个人角落。
+```
 
-日期和 `YYYY-MM-DD` 统一使用 `Asia/Shanghai`，不再提供时区覆盖变量。
+日期和 `YYYY-MM-DD` 统一使用 `Asia/Shanghai`，不提供时区覆盖变量。
 
 以下变量由 CI 自动设置，不需要手动配置：
 
 - `BASE_PATH`：项目页为 `/仓库名`，用户主页为 `/`。
 - `SITE_URL`：默认 `https://<用户名>.github.io`；自定义域名时由仓库变量 `SITE_URL` 覆盖。
-
-所有 `PUBLIC_*` 变量都会出现在公开的前端产物中，**不要放任何密钥**。
 
 ## 7. 部署到 GitHub Pages
 
@@ -280,7 +276,7 @@ https://github.com/wuhulamb/t/actions/runs/39438201961
 公网部署也已验证：
 
 ```text
-https://wuhulamb.github.io/t/                    → 200，标题“拾光集”
+https://wuhulamb.github.io/t/                    → 200，标题“三一”
 /posts/2026-10-15-city-walk/                    → 200
 /uploads/2026/10/city-walk.svg                  → 200 image/svg+xml
 /t/_astro/BaseLayout.CoXZlaOc.css               → 200 text/css

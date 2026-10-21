@@ -73,7 +73,7 @@ const year = new Date().getFullYear();
     <header class="site-header">
       <div class="shell site-header__inner">
         <a class="brand" href={withBase('/')} aria-label={`${siteConfig.title} 首页`}>
-          <span class="brand__mark" aria-hidden="true">拾</span>
+          <span class="brand__mark" aria-hidden="true">三</span>
           <span class="brand__text">
             <strong>{siteConfig.title}</strong>
             <small>{siteConfig.tagline}</small>
@@ -99,16 +99,7 @@ const year = new Date().getFullYear();
 
     <footer class="site-footer">
       <div class="shell site-footer__inner">
-        <p>© {year} {siteConfig.author || siteConfig.title}</p>
-        <p class="site-footer__note">
-          文字与图片长期保存在 Git 仓库中
-          {siteConfig.repoUrl && (
-            <>
-              {' · '}
-              <a href={siteConfig.repoUrl} rel="noreferrer">查看仓库</a>
-            </>
-          )}
-        </p>
+        <p>© {year} {siteConfig.title}</p>
       </div>
     </footer>
   </body>

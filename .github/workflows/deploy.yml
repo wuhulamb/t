@@ -55,11 +55,6 @@ jobs:
         env:
           BASE_PATH: ${{ steps.site.outputs.base }}
           SITE_URL: ${{ steps.site.outputs.site_url }}
-          PUBLIC_SITE_TITLE: ${{ vars.PUBLIC_SITE_TITLE }}
-          PUBLIC_SITE_TAGLINE: ${{ vars.PUBLIC_SITE_TAGLINE }}
-          PUBLIC_SITE_DESCRIPTION: ${{ vars.PUBLIC_SITE_DESCRIPTION }}
-          PUBLIC_SITE_AUTHOR: ${{ vars.PUBLIC_SITE_AUTHOR }}
-          PUBLIC_REPO_URL: ${{ vars.PUBLIC_REPO_URL }}
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

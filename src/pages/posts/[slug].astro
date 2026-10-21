@@ -35,7 +35,6 @@ const cover = post.data.images[0];
 const body = post.body ?? '';
 const characterCount = countCharacters(body);
 const description = getPostExcerpt(body, 150) || undefined;
-const imageCount = post.data.images.length;
 
 const bodyImages = new Set(extractImagePaths(body));
 const galleryImages = post.data.images
@@ -76,7 +75,6 @@ const olderPost =
           )
         }
         <span>{characterCount} 字</span>
-        {imageCount > 0 && <span>{imageCount} 张图片</span>}
       </div>
     </header>
 
@@ -86,7 +84,7 @@ const olderPost =
 
     {
       galleryImages.length > 0 && (
-        <ImageGallery images={galleryImages} total={imageCount} title={title} />
+        <ImageGallery images={galleryImages} title={title} />
       )
     }
 

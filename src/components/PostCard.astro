@@ -19,7 +19,6 @@ const title = getPostTitle(post);
 const cover = post.data.images[0];
 const excerpt = getPostExcerpt(post.body ?? '', 120);
 const characterCount = countCharacters(post.body ?? '');
-const imageCount = post.data.images.length;
 ---
 
 <article class:list={['post-card', !cover && 'post-card--text']}>
@@ -35,7 +34,6 @@ const imageCount = post.data.images.length;
       <div class="post-card__meta">
         <time datetime={post.data.createdAt.toISOString()}>{formatDate(post.data.createdAt)}</time>
         <span>{characterCount} 字</span>
-        {imageCount > 0 && <span>{imageCount} 张图片</span>}
       </div>
       <h2>{title}</h2>
       {excerpt && <p class="post-card__excerpt">{excerpt}</p>}

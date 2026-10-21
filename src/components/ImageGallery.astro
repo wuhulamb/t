@@ -8,12 +8,10 @@ interface GalleryImage {
 
 interface Props {
   images: GalleryImage[];
-  total: number;
   title: string;
 }
 
-const { images, total, title } = Astro.props;
-const pad = (value: number) => String(value).padStart(2, '0');
+const { images, title } = Astro.props;
 ---
 
 <section class="gallery" aria-label="帖子图片">
@@ -26,9 +24,6 @@ const pad = (value: number) => String(value).padStart(2, '0');
           loading="lazy"
           decoding="async"
         />
-        <figcaption>
-          {pad(index + 1)} / {pad(total)}
-        </figcaption>
       </figure>
     ))
   }

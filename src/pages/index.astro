@@ -6,14 +6,12 @@ import { getPublishedPosts } from '../lib/content';
 import { formatDate, toDateISO, withBase } from '../lib/posts';
 
 const posts = await getPublishedPosts();
-const imageCount = posts.reduce((total, post) => total + post.data.images.length, 0);
 const latest = posts[0];
 ---
 
 <BaseLayout>
   <section class="hero">
     <div class="hero__copy">
-      <p class="eyebrow">PERSONAL JOURNAL</p>
       <h1>{siteConfig.title}</h1>
       <p class="hero__lede">{siteConfig.description}</p>
       <p class="hero__hint">
@@ -25,10 +23,6 @@ const latest = posts[0];
         <div class="stat">
           <strong>{posts.length}</strong>
           <span>篇记录</span>
-        </div>
-        <div class="stat">
-          <strong>{imageCount}</strong>
-          <span>张图片</span>
         </div>
       </div>
       {
@@ -54,10 +48,7 @@ const latest = posts[0];
       posts.length === 0 ? (
         <div class="empty-state">
           <p class="empty-state__title">还没有帖子。</p>
-          <p>
-            在 <code>content/posts/</code> 中添加一个 Markdown 文件，图片放到
-            <code>public/uploads/YYYY/MM/</code>，重新构建后就会出现在这里。
-          </p>
+          <p>新的记录会出现在这里。</p>
         </div>
       ) : (
         <div class="post-list">
