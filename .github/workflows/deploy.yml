@@ -3,6 +3,10 @@ name: Build and deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    # Worker 先提交图片、最后提交 Markdown。图片提交不单独构建，
+    # 由随后的 Markdown 提交构建包含全部图片的最新站点。
+    paths-ignore:
+      - 'public/uploads/**'
   workflow_dispatch:
 
 permissions:
