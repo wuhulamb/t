@@ -20,7 +20,7 @@
 - 响应式布局、浅色/深色模式、打印样式、基础 SEO/Open Graph 标签。
 - 兼容 GitHub Pages 项目页路径（`https://user.github.io/repo/`）和用户主页路径（`https://user.github.io/`）。
 - GitHub Actions：安装依赖 → 类型检查 → 自动化测试 → 构建 → 检查构建产物 → 上传并部署 Pages。
-- 4 篇示例帖子和 4 张 SVG 占位图片，可直接替换。
+- 初始为空状态，包含 0 篇帖子和 0 张图片；添加第一篇内容后自动生成页面。
 - 不加载外部字体、统计脚本或 Cookie。
 
 数据流（第一阶段）：
@@ -50,16 +50,12 @@ GitHub Pages（公开静态网站）
 ```text
 .
 ├── .github/workflows/deploy.yml   # GitHub Pages 构建与部署
-├── content/posts/                 # 帖子 Markdown
-│   ├── 319caf11-e1ab-4e00-8b1b-243e4970988d.md
-│   ├── 5173d6e4-ac6b-4837-bf74-50542ea0691c.md
-│   ├── ea025758-5935-40db-89b5-a2cfdd965993.md
-│   └── 41ffec43-0218-4777-9d9b-d610667a95c6.md
+├── content/posts/                 # 帖子 Markdown（当前为空，仅 .gitkeep）
 ├── public/
 │   ├── .nojekyll                  # 避免 GitHub Pages 的 Jekyll 处理
 │   ├── favicon.svg
 │   ├── robots.txt
-│   └── uploads/2026/10/           # 图片（构建时原样复制）
+│   └── uploads/                   # 图片（当前为空，仅 .gitkeep）
 ├── scripts/check-built-site.mjs   # 构建产物链接/图片检查
 ├── src/
 │   ├── components/
@@ -275,10 +271,8 @@ https://github.com/wuhulamb/t/actions/runs/39438201961
 公网部署也已验证：
 
 ```text
-https://wuhulamb.github.io/t/                    → 200，标题“三一”
-/posts/ea025758-5935-40db-89b5-a2cfdd965993/    → 200
-/uploads/2026/10/ea025758-5935-40db-89b5-a2cfdd965993-56432cffe361.svg → 200 image/svg+xml
-/t/_astro/BaseLayout.CoXZlaOc.css               → 200 text/css
+https://wuhulamb.github.io/t/     → 200，标题“三一”，0 篇帖子
+https://wuhulamb.github.io/t/posts/ → 200，归档为空
 ```
 
 Pages 当前构建方式为 GitHub Actions，状态为 `built`。
@@ -302,11 +296,11 @@ Pages 当前构建方式为 GitHub Actions，状态为 `built`。
 
 | 验收项 | 状态 |
 | --- | --- |
-| 能手动向仓库添加 Markdown 和图片 | 已完成，示例内容可直接参考 |
-| 本地构建成功 | 已完成（9 个页面） |
+| 能手动向仓库添加 Markdown 和图片 | 已完成，当前为干净空状态 |
+| 本地构建成功 | 已完成（3 个页面，0 篇帖子） |
 | GitHub Actions 自动构建 | 已成功运行 |
 | GitHub Pages 部署 | 已部署，Pages 状态 `built` |
-| 公开网站正确展示文字和图片 | 已通过公网 HTTP 检查 |
+| 公开网站空状态正常 | 已通过公网 HTTP 检查 |
 
 ## 10. 需要你手动完成的操作
 
