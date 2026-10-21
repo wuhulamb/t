@@ -51,10 +51,10 @@ GitHub Pages（公开静态网站）
 .
 ├── .github/workflows/deploy.yml   # GitHub Pages 构建与部署
 ├── content/posts/                 # 帖子 Markdown
-│   ├── 2026-09-28-small-things.md
-│   ├── 2026-10-08-untitled.md
-│   ├── 2026-10-15-city-walk.md
-│   └── 2026-10-18-morning-light.md
+│   ├── 319caf11-e1ab-4e00-8b1b-243e4970988d.md
+│   ├── 5173d6e4-ac6b-4837-bf74-50542ea0691c.md
+│   ├── ea025758-5935-40db-89b5-a2cfdd965993.md
+│   └── 41ffec43-0218-4777-9d9b-d610667a95c6.md
 ├── public/
 │   ├── .nojekyll                  # 避免 GitHub Pages 的 Jekyll 处理
 │   ├── favicon.svg
@@ -277,8 +277,8 @@ https://github.com/wuhulamb/t/actions/runs/39438201961
 
 ```text
 https://wuhulamb.github.io/t/                    → 200，标题“三一”
-/posts/2026-10-15-city-walk/                    → 200
-/uploads/2026/10/city-walk.svg                  → 200 image/svg+xml
+/posts/ea025758-5935-40db-89b5-a2cfdd965993/    → 200
+/uploads/2026/10/ea025758-5935-40db-89b5-a2cfdd965993-56432cffe361.svg → 200 image/svg+xml
 /t/_astro/BaseLayout.CoXZlaOc.css               → 200 text/css
 ```
 

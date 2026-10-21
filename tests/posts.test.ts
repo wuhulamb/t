@@ -46,7 +46,9 @@ describe('normalizeBase / withBase', () => {
 
 describe('postPath', () => {
   it('builds stable post URLs and encodes segments', () => {
-    expect(postPath('2026-10-18-morning-light')).toBe('/posts/2026-10-18-morning-light/');
+    expect(postPath('41ffec43-0218-4777-9d9b-d610667a95c6')).toBe(
+      '/posts/41ffec43-0218-4777-9d9b-d610667a95c6/',
+    );
     expect(postPath('folder/hello world')).toBe('/posts/folder/hello%20world/');
   });
 });
