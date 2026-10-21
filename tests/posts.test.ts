@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   extractImagePaths,
   formatDate,
+  formatDateTime,
   formatMonthDay,
   getPostExcerpt,
   getPostTitle,
@@ -53,16 +54,18 @@ describe('postPath', () => {
 describe('date formatting', () => {
   const date = new Date('2026-10-18T07:20:00+08:00');
 
-  it('formats dates in the configured time zone', () => {
+  it('formats dates in Asia/Shanghai', () => {
     expect(formatDate(date)).toBe('2026年10月18日');
+    expect(formatDateTime(date)).toBe('2026年10月18日 07:20');
     expect(toDateISO(date)).toBe('2026-10-18');
     expect(getYear(date)).toBe('2026');
     expect(formatMonthDay(date)).toBe('10.18');
   });
 
-  it('uses the site time zone at the day boundary', () => {
+  it('uses Asia/Shanghai at the day boundary', () => {
     const lateUtc = new Date('2026-10-17T18:30:00Z');
     expect(toDateISO(lateUtc)).toBe('2026-10-18');
+    expect(formatDateTime(lateUtc)).toBe('2026年10月18日 02:30');
   });
 });
 

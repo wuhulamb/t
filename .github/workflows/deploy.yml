@@ -60,7 +60,6 @@ jobs:
           PUBLIC_SITE_DESCRIPTION: ${{ vars.PUBLIC_SITE_DESCRIPTION }}
           PUBLIC_SITE_AUTHOR: ${{ vars.PUBLIC_SITE_AUTHOR }}
           PUBLIC_REPO_URL: ${{ vars.PUBLIC_REPO_URL }}
-          PUBLIC_TIME_ZONE: ${{ vars.PUBLIC_TIME_ZONE }}
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

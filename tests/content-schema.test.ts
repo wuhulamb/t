@@ -46,17 +46,21 @@ describe('postFrontmatterSchema', () => {
     }
   });
 
-  it('rejects too many images', () => {
+  it('accepts any number of images', () => {
     const images = Array.from(
-      { length: 31 },
+      { length: 40 },
       (_, index) => `/uploads/2026/10/image-${index}.jpg`,
     );
-    expect(postFrontmatterSchema.safeParse({ ...valid, images }).success).toBe(false);
+    const parsed = postFrontmatterSchema.parse({ ...valid, images });
+    expect(parsed.images).toHaveLength(40);
   });
 
-  it('rejects overlong titles', () => {
+  it('limits titles by Unicode code point, not UTF-16 length', () => {
     expect(
-      postFrontmatterSchema.safeParse({ ...valid, title: '长'.repeat(201) }).success,
+      postFrontmatterSchema.safeParse({ ...valid, title: '😀'.repeat(200) }).success,
+    ).toBe(true);
+    expect(
+      postFrontmatterSchema.safeParse({ ...valid, title: '😀'.repeat(201) }).success,
     ).toBe(false);
   });
 });

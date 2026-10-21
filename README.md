@@ -15,6 +15,7 @@
 - Astro 7 静态网站，Markdown 内容集合。
 - 首页帖子列表、全部归档页、帖子详情页、404 页面。
 - 多图展示：列表封面、详情页图片网格、正文内嵌图片。
+- 详情页显示 Asia/Shanghai 日期时间；列表卡片和归档显示每篇正文字符数。
 - 标题为空时自动使用“无标题 · 日期”作为展示标题。
 - 响应式布局、浅色/深色模式、打印样式、基础 SEO/Open Graph 标签。
 - 兼容 GitHub Pages 项目页路径（`https://user.github.io/repo/`）和用户主页路径（`https://user.github.io/`）。
@@ -144,10 +145,10 @@ draft: false
 | 字段 | 必填 | 说明 |
 | --- | --- | --- |
 | `id` | 是 | UUID，稳定且唯一。后续 Worker 阶段用于防重复发布，发布后不要修改。 |
-| `title` | 否 | 最多 200 字符。为空或只含空格时显示为“无标题 · 日期”。 |
-| `createdAt` | 是 | ISO 8601 时间，例如 `2026-10-20T09:30:00+08:00`。 |
+| `title` | 否 | 最多 200 个 Unicode code point。为空或只含空格时显示为“无标题 · 日期”。 |
+| `createdAt` | 是 | ISO 8601 时间，例如 `2026-10-20T09:30:00+08:00`。存储统一为 UTC，展示统一为 Asia/Shanghai。 |
 | `updatedAt` | 否 | 最近更新时间，显示在详情页。 |
-| `images` | 否 | 图片根路径数组，建议最多 30 张。默认空数组。 |
+| `images` | 否 | 图片根路径数组，不限制数量；默认空数组。 |
 | `draft` | 否 | `true` 时不会出现在构建产物中，默认 `false`。 |
 
 图片规则：
@@ -157,6 +158,7 @@ draft: false
 3. frontmatter 和正文中的路径写成根路径：`/uploads/2026/10/example.webp`。
 4. 正文内嵌图片会自动加上 GitHub Pages 的 base；已经出现在正文中的图片不会在底部画廊重复展示。
 5. 图片原样发布，不做压缩/转码。建议上传前压缩到合理尺寸（例如长边 2000px 内、单张小于 500KB）。
+6. 正文字符数不设上限；网站按 Unicode code point 统计并在卡片、详情和归档中显示。
 
 URL 由文件名决定：`content/posts/2026-10-20-example.md` → `/posts/2026-10-20-example/`。发布后如需保持链接稳定，不要重命名文件。
 
@@ -181,7 +183,8 @@ GitHub Actions 会自动构建和部署，不需要手动修改首页或归档�
 | `PUBLIC_SITE_DESCRIPTION` | 内置描述 | 首页介绍和 meta description |
 | `PUBLIC_SITE_AUTHOR` | 空 | 页脚署名，空时使用站点标题 |
 | `PUBLIC_REPO_URL` | 空 | 页脚“查看仓库”链接；公开仓库才建议填写 |
-| `PUBLIC_TIME_ZONE` | `Asia/Shanghai` | 日期显示和 `YYYY-MM-DD` 时区 |
+
+日期和 `YYYY-MM-DD` 统一使用 `Asia/Shanghai`，不再提供时区覆盖变量。
 
 以下变量由 CI 自动设置，不需要手动配置：
 
@@ -224,7 +227,7 @@ GitHub Actions 会自动构建和部署，不需要手动修改首页或归档�
 2. `actions/setup-node@v7` 安装 Node 24 并缓存 npm。
 3. `npm ci` 安装锁定依赖。
 4. 根据仓库名/`SITE_URL` 计算 `BASE_PATH` 与 `SITE_URL`。
-5. `npm run verify`：类型检查 → 29 个测试 → 构建 → 检查构建产物中的帖子、图片、站内链接。
+5. `npm run verify`：类型检查 → 30 个测试 → 构建 → 检查构建产物中的帖子、图片、站内链接。
 6. `actions/configure-pages@v6`、`actions/upload-pages-artifact@v5` 上传 `dist/`。
 7. `actions/deploy-pages@v5` 发布到 `github-pages` 环境。
 
@@ -243,7 +246,7 @@ npm test
   Tests       29 passed (29)
 
 npm run build
-  7 page(s) built
+  8 page(s) built
 
 npm run test:site
   base: /
@@ -287,11 +290,11 @@ Pages 当前构建方式为 GitHub Actions，状态为 `built`。
 
 测试覆盖：
 
-- frontmatter：UUID、日期、标题长度、图片路径安全、图片数量、草稿默认值。
+- frontmatter：UUID、日期、标题长度（按 Unicode code point）、图片路径安全、任意图片数量、草稿默认值。
 - 内容文件：ID 唯一、正文非空、图片文件真实存在、正文图片路径位于 `/uploads/`。
 - URL/base：`/` 与 `/repo/`、重复 base、外部链接、锚点。
-- 日期：时区、跨日边界、归档年月。
-- 排序、标题回退、摘要提取、正文图片去重。
+- 日期：Asia/Shanghai 时区、跨日边界、日期时间、归档年月。
+- 排序、标题回退、摘要提取、正文图片去重、字符计数。
 - Markdown rehype 插件对正文图片/链接的 base 处理。
 - 构建产物：首页帖子链接、每篇详情页、正文首段、图片文件、归档页、404、所有站内链接。
 
@@ -305,7 +308,7 @@ Pages 当前构建方式为 GitHub Actions，状态为 `built`。
 | 验收项 | 状态 |
 | --- | --- |
 | 能手动向仓库添加 Markdown 和图片 | 已完成，示例内容可直接参考 |
-| 本地构建成功 | 已完成（7 个页面） |
+| 本地构建成功 | 已完成（8 个页面） |
 | GitHub Actions 自动构建 | 已成功运行 |
 | GitHub Pages 部署 | 已部署，Pages 状态 `built` |
 | 公开网站正确展示文字和图片 | 已通过公网 HTTP 检查 |

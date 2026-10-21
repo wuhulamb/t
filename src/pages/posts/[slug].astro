@@ -6,13 +6,13 @@ import type { Post } from '../../lib/content';
 import { getPublishedPosts } from '../../lib/content';
 import {
   extractImagePaths,
-  formatDate,
+  formatDateTime,
   getPostExcerpt,
   getPostTitle,
   postPath,
-  toDateISO,
   withBase,
 } from '../../lib/posts';
+import { countCharacters } from '../../lib/text';
 
 interface Props {
   post: Post;
@@ -33,6 +33,7 @@ const { Content } = await render(post);
 const title = getPostTitle(post);
 const cover = post.data.images[0];
 const body = post.body ?? '';
+const characterCount = countCharacters(body);
 const description = getPostExcerpt(body, 150) || undefined;
 const imageCount = post.data.images.length;
 
@@ -61,19 +62,20 @@ const olderPost =
       <a class="back-link" href={withBase('/')}>← 返回首页</a>
       <h1>{title}</h1>
       <div class="post__meta">
-        <time datetime={toDateISO(post.data.createdAt)}>
-          {formatDate(post.data.createdAt)}
+        <time datetime={post.data.createdAt.toISOString()}>
+          {formatDateTime(post.data.createdAt)}
         </time>
         {
           post.data.updatedAt && (
             <span>
               更新于
-              <time datetime={toDateISO(post.data.updatedAt)}>
-                {formatDate(post.data.updatedAt)}
+              <time datetime={post.data.updatedAt.toISOString()}>
+                {formatDateTime(post.data.updatedAt)}
               </time>
             </span>
           )
         }
+        <span>{characterCount} 字</span>
         {imageCount > 0 && <span>{imageCount} 张图片</span>}
       </div>
     </header>

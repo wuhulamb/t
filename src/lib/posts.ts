@@ -4,20 +4,32 @@
  */
 
 const DEFAULT_BASE = import.meta.env.BASE_URL || '/';
-const DATE_TIME_ZONE = import.meta.env.PUBLIC_TIME_ZONE?.trim() || 'Asia/Shanghai';
+
+/** 全站统一使用 Asia/Shanghai 展示日期和时间；存储层始终使用 UTC ISO 8601。 */
+export const DISPLAY_TIME_ZONE = 'Asia/Shanghai';
 
 const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-  timeZone: DATE_TIME_ZONE,
+  timeZone: DISPLAY_TIME_ZONE,
+});
+
+const dateTimeFormatter = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+  timeZone: DISPLAY_TIME_ZONE,
 });
 
 const isoFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: '2-digit',
   day: '2-digit',
-  timeZone: DATE_TIME_ZONE,
+  timeZone: DISPLAY_TIME_ZONE,
 });
 
 export interface PostDataLike {
@@ -69,6 +81,10 @@ export function postPath(id: string): string {
 
 export function formatDate(date: Date): string {
   return dateFormatter.format(date);
+}
+
+export function formatDateTime(date: Date): string {
+  return dateTimeFormatter.format(date);
 }
 
 /** 生成与站点时区一致的 YYYY-MM-DD，用于 <time datetime>。 */
