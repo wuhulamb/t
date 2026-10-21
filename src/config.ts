@@ -1,5 +1,4 @@
 export const siteConfig = {
   title: '三一',
-  tagline: '文字与照片',
-  description: '一个只记录文字与照片的个人角落。',
+  description: '简单的文字，简单的思考，简单的生活',
 };
