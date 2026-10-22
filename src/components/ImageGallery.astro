@@ -18,12 +18,19 @@ const { images, title } = Astro.props;
   {
     images.map(({ src, index }) => (
       <figure class="gallery__item">
-        <img
-          src={withBase(src)}
-          alt={`${title} · 图片 ${index + 1}`}
-          loading="lazy"
-          decoding="async"
-        />
+        <a
+          href={withBase(src)}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`查看完整图片 ${index + 1}`}
+        >
+          <img
+            src={withBase(src)}
+            alt={`${title} · 图片 ${index + 1}`}
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
       </figure>
     ))
   }

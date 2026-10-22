@@ -99,6 +99,9 @@ for (const file of files) {
 const indexPath = join(dist, 'index.html');
 if (!(await exists(indexPath))) fail('dist/index.html 不存在，请先运行 npm run build');
 const indexHtml = await readFile(indexPath, 'utf8');
+if (!indexHtml.includes('id="image-lightbox"')) {
+  fail('首页缺少图片灯箱组件');
+}
 
 const internalUrls = new Set();
 let checkedImages = 0;
@@ -116,6 +119,9 @@ for (const post of published) {
   }
 
   const postHtml = await readFile(postFile, 'utf8');
+  if (!postHtml.includes('id="image-lightbox"')) {
+    fail(`帖子页面缺少图片灯箱组件: ${post.id}`);
+  }
   const firstText =
     post.body
       .split(/\n\s*\n/)

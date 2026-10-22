@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config';
+import ImageLightbox from '../components/ImageLightbox.astro';
 import { withBase } from '../lib/posts';
 import '../styles/global.css';
 
@@ -101,5 +102,7 @@ const year = new Date().getFullYear();
         <p>© {year} {siteConfig.title}</p>
       </div>
     </footer>
+
+    <ImageLightbox />
   </body>
 </html>
