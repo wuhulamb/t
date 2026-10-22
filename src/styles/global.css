@@ -211,17 +211,13 @@
   }
 
   .brand__mark {
-    display: grid;
+    display: block;
     width: 2.9rem;
     height: 2.9rem;
     flex: 0 0 auto;
-    place-items: center;
     border-radius: 50%;
+    object-fit: cover;
     background: var(--text);
-    color: var(--bg);
-    font-family: var(--font-serif);
-    font-size: 1.35rem;
-    line-height: 1;
   }
 
   .brand__text strong {
@@ -1094,7 +1090,6 @@
     .brand__mark {
       width: 2.55rem;
       height: 2.55rem;
-      font-size: 1.2rem;
     }
 
     .brand__text strong {
